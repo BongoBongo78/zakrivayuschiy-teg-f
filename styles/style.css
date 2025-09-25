@@ -52,18 +52,24 @@
 
 .page-header__logo {
   font-family: var(--font-accent);
-  font-size: var(--header-logo-size);
+  /* Адаптивный размер: сжимается на узких ширинах, но не больше 65px */
+  font-size: clamp(36px, 6vw, var(--header-logo-size));
   line-height: 1;
+  /* Не переносим логотип, лучше уменьшим шрифт */
+  white-space: nowrap;
 }
 
 .page-header__subtitle {
   font-family: var(--font-accent);
   font-weight: var(--header-subtitle-weight);
-  font-size: var(--header-subtitle-size);
+  /* Адаптивный размер: сжимается на узких ширинах, но не больше 23px */
+  font-size: clamp(14px, 2.6vw, var(--header-subtitle-size));
   line-height: 1;
   /* 100% */
   letter-spacing: var(--header-subtitle-letter);
   text-transform: uppercase;
+  /* Не переносим заголовок, лучше уменьшим шрифт */
+  white-space: nowrap;
 }
 
 .page-cards__item-heading {
