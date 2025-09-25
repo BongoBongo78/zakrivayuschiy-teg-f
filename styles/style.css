@@ -4,13 +4,545 @@
 ✦ like-icon — для svg-иконки анимированного сердца
 ✦ card__like-button — для кнопки Like рядом с иконкой
 ✦ card__icon-button — для кнопки, оборачивающей иконку
-✦ card__icon-button — для кнопки, оборачивающей иконку
 ✦ is-liked — для обозначения состояния лайкнутой иконки в виде сердца
 ✦ button__text — для обозначения текстового элемента внутри кнопки
 
 */
 
+/* Страница                  */
 .page {
   min-inline-size: 320px;
   min-block-size: 100dvb;
+  /* Фон страницы: множественный градиент-сетка + плавное затемнение */
+  background-image: var(--page-gradient);
+  background-attachment: fixed;
+  /* Фон фиксирован при прокрутке */
+  background-size: cover;
+  /* Растянуть фон на всю область */
+  background-repeat: no-repeat;
+  /* Без повторения, слои и так повторяются где надо */
+  background-position: center;
+  /* Центрирование для совместимости */
+  font-family: var(--font-main);
+}
+
+/* Универсальный контейнер с адаптивной шириной */
+.container {
+  inline-size: var(--container-inline-size);
+  margin-inline: auto;
+}
+
+/* Шапка страницы (page-header): белый прямоугольник по центру */
+.page-header {
+  background-color: #ffffff;
+  color: #000;
+  border: 2px solid #000;
+  /* Сплошная рамка контейнера шапки */
+  padding: var(--header-pad);
+  margin-block-start: var(--header-mt);
+  margin-block-end: var(--header-mb);
+  min-block-size: var(--header-min-block-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--header-gap);
+  text-align: center;
+}
+
+.page-header__logo {
+  font-family: var(--font-accent);
+  font-size: var(--header-logo-size);
+  line-height: 1;
+}
+
+.page-header__subtitle {
+  font-family: var(--font-accent);
+  font-weight: var(--header-subtitle-weight);
+  font-size: var(--header-subtitle-size);
+  line-height: 1;
+  /* 100% */
+  letter-spacing: var(--header-subtitle-letter);
+  text-transform: uppercase;
+}
+
+.page-cards__item-heading {
+  font-family: var(--font-main);
+  font-variation-settings: 'wght' var(--card-title-weight);
+  font-size: var(--card-title-size);
+  line-height: var(--card-title-line-height);
+  letter-spacing: var(--card-title-letter);
+  vertical-align: middle;
+  padding-left: 5px;
+}
+
+/* Основной контент (page-main / page-cards) */
+
+/* Секция карточек страницы */
+.page-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cards-gap);
+  /* 50px при ширине 1440px */
+}
+
+/* Элемент списка карточек */
+.page-cards__item {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  /* заголовок / изображение / описание+действия */
+}
+
+/* Заголовок карточки на белом фоне */
+.page-cards__item-header {
+  background-color: #fff;
+  border-block-end: 2px solid #000;
+  display: flex;
+  align-items: center;
+  padding: 6px;
+}
+
+/* Квадратное изображение */
+.page-cards__item-image {
+  aspect-ratio: 1 / 1;
+  /* квадрат */
+  /* Без внутренних отступов, изображение заполняет контейнер */
+  position: relative;
+  /* Для позиционирования лейбла внутри */
+}
+
+.page-cards__item-image img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* Фильтры изображений карточек */
+/* dawn — утро, лёгкая ностальгия */
+.page-cards__item-image--dawn img {
+  filter: grayscale(1);
+}
+
+/* vintage — тёплая винтажная подача */
+.page-cards__item-image--vintage img {
+  filter: sepia(0.9) saturate(0.8);
+}
+
+/* soft — мягкий, приглушённый контраст */
+.page-cards__item-image--soft img {
+  filter: brightness(1.05) contrast(0.9);
+}
+
+/* sunny — яркое солнечное настроение */
+.page-cards__item-image--sunny img {
+  filter: brightness(1.2) saturate(1.25);
+}
+
+/* rose — лёгкий розовый оттенок */
+.page-cards__item-image--rose img {
+  filter: hue-rotate(345deg) saturate(2);
+}
+
+/* invert — легкая инверсия с выравниванием контраста */
+.page-cards__item-image--invert img {
+  filter: invert(0.1) contrast(1.5);
+}
+
+/* contrast — подчёркнутый контраст, немного темнее */
+.page-cards__item-image--contrast img {
+  filter: contrast(1.55) brightness(0.98);
+}
+
+/* blur — размытый фон */
+.page-cards__item-image--blur img {
+  filter: blur(3px);
+}
+
+/* Лейбл на изображении */
+.page-cards__item-label {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  opacity: var(--label-opacity);
+  mix-blend-mode: hard-light;
+  pointer-events: none;
+  /* Лейбл не перекрывает взаимодействие с картинкой */
+
+  /* Типографика */
+  font-family: var(--font-accent);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1;
+  /* 100% */
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* Обводка текста: современный способ */
+@supports (-webkit-text-stroke: 1px var(--label-stroke-color)) {
+  .page-cards__item-label {
+    color: #0000;
+    /* прозрачная заливка */
+    -webkit-text-stroke: 1px var(--label-stroke-color);
+  }
+}
+
+/* Фоллбэк для обводки текста через тени */
+@supports not (-webkit-text-stroke: 1px var(--label-stroke-color)) {
+  .page-cards__item-label {
+    text-shadow:
+      1px 0 0 var(--label-stroke-color),
+      -1px 0 0 var(--label-stroke-color),
+      0 1px 0 var(--label-stroke-color),
+      0 -1px 0 var(--label-stroke-color),
+      1px 1px 0 var(--label-stroke-color),
+      -1px 1px 0 var(--label-stroke-color),
+      1px -1px 0 var(--label-stroke-color),
+      -1px -1px 0 var(--label-stroke-color);
+  }
+}
+
+/* Текст на белом фоне + действия */
+.page-cards__item-body {
+  background-color: #fff;
+  padding: 25px;
+  /* Текст описания имеет отступ 25px от границ контейнера */
+  border-block-start: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.page-cards__item-description {
+  margin: 0;
+  font-family: var(--font-main);
+  font-variation-settings: 'wght' var(--card-desc-weight);
+  font-size: var(--card-desc-size);
+  line-height: var(--card-desc-line-height);
+  letter-spacing: 0.03em;
+}
+
+.page-cards__item-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Отступ между сердцем и кнопкой Like 12px */
+  justify-content: flex-end;
+  /* Прижать сердечко и Like к правому краю */
+}
+
+/* Кнопки карточки (сохраняем совместимость с JS-классами) */
+.page-cards__item-icon-button,
+.page-cards__item-like-button,
+.card__icon-button,
+.card__like-button {
+  appearance: none;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  padding: 8px 37px;
+  cursor: pointer;
+}
+
+/* Сердце без рамки и с вертикальными внутренними отступами по 7px */
+.page-cards__item-icon-button,
+.card__icon-button {
+  border: 2px solid transparent;
+  /* прозрачная рамка в обычном состоянии */
+  background: transparent;
+  padding-block: 7px;
+  padding-inline: 0;
+  outline: none;
+  transition: border-color 0.3s ease;
+  /* плавность появления/снятия рамки */
+}
+
+/* Фокус для кнопки-обёртки сердца: показываем акцентную рамку 2px */
+.page-cards__item-icon-button:focus-visible,
+.card__icon-button:focus-visible {
+  border-color: currentColor;
+  /* акцентный цвет берём из текущего текста */
+}
+
+/* Иконка сердца внутри кнопки */
+.like-icon {
+  display: block;
+  /* Размер иконки задаём из CSS, ширина 27px, высота 24px */
+  inline-size: 27px;
+  block-size: 24px;
+  overflow: visible;
+}
+
+/* Текст кнопки Like */
+.page-cards__item-like-button .button__text,
+.card__like-button .button__text {
+  font-family: var(--font-accent);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+
+/* Текст кнопок для анимаций и скриптов */
+.button__text {
+  display: inline-block;
+}
+
+/* Футер (page-footer)       */
+
+/* Футер страницы: одна центральная кнопка */
+.page-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block-start: var(--cards-gap);
+  /* отступ над футером = 50px при 1440px */
+  margin-block-end: 100px;
+  /* нижний отступ от конца страницы */
+}
+
+.page-footer__save-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  appearance: none;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  padding: 15px 16px;
+  cursor: pointer;
+}
+
+/* Эффекты кнопок Like, "Сохранить на память" и "ОК" (Step 7) */
+.card__like-button,
+.page-footer__save-button,
+.modal__actions .card__like-button {
+  position: relative;
+  overflow: hidden;
+  /* для анимации псевдоэлемента */
+  outline: none;
+  transition: box-shadow 0.3s ease;
+  /* плавность для фокуса и снятия */
+}
+
+/* Тень при фокусе (2px 2px 0, цвет = currentColor) */
+.card__like-button:focus-visible,
+.page-footer__save-button:focus-visible,
+.modal__actions .card__like-button:focus-visible {
+  box-shadow: 2px 2px 0 currentColor;
+}
+
+/* Скользящий псевдоэлемент для наведения: слева направо */
+.card__like-button::before,
+.page-footer__save-button::before,
+.modal__actions .card__like-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease-in-out;
+}
+
+.card__like-button:hover::before,
+.page-footer__save-button:hover::before,
+.modal__actions .card__like-button:hover::before {
+  transform: translateX(0);
+}
+
+/* Текст и иконка поверх, с режимом смешивания difference */
+.card__like-button .button__text,
+.page-footer__save-button .button__text,
+.modal__actions .card__like-button .button__text {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  /* базовый белый */
+  mix-blend-mode: difference;
+  /* белый на белом -> чёрный; белый на чёрном -> белый */
+}
+
+/* Иконка дискеты: синхронизируем поведение с текстом */
+.page-footer__save-button .save-icon {
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: difference;
+  filter: invert(1);
+  /* инвертируем базовую чёрную заливку в белую для корректной разницы */
+}
+
+/* Иконка дискеты рядом с текстом */
+.save-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 22px;
+  /* базовый размер для футера */
+  height: 21px;
+}
+
+/* Размер иконки в модальном окне по макету: 39×39px */
+.modal .save-icon {
+  width: 39px;
+  height: 39px;
+  align-self: center;
+  /* по центру относительно текста в соседней колонке */
+}
+
+/* Типографика текста кнопки футера */
+.page-footer__save-button .button__text {
+  font-family: var(--font-accent);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 0.9;
+  /* 90% */
+  letter-spacing: 0;
+}
+
+/* Модальное окно сохранения */
+.modal {
+  display: none;
+  /* по умолчанию скрыто */
+  border: none;
+  padding: 0;
+  background: transparent;
+}
+
+.modal[open] {
+  display: grid;
+  /* включаем только когда окно открыто */
+  grid-template-columns: auto 1fr;
+  /* иконка + контент */
+  gap: clamp(12px, 3vw, 20px);
+  background: #fff;
+  color: #000;
+  border: 2px solid #000;
+  padding: 30px;
+  /* внутренние отступы модалки 30px от краёв */
+  /* Размер модалки: около 353×191 на десктопе, с адаптацией на меньших экранах */
+  inline-size: clamp(280px, 35vw, 353px);
+  max-inline-size: 95vw;
+  max-block-size: 90vh;
+  box-sizing: border-box;
+}
+
+.modal__content {
+  display: contents;
+  /* чтобы колонки работали для вложенных элементов */
+}
+
+.modal__text {
+  display: flex;
+  align-items: center;
+}
+
+/* Типографика описания модального окна */
+.modal__text p {
+  margin: 0;
+  font-family: var(--font-accent);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  /* 150% */
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.modal__actions {
+  grid-column: 1 / -1;
+  /* на всю ширину под контентом */
+  display: flex;
+  justify-content: stretch;
+}
+
+/* Кнопка ОК — на всю ширину модального окна */
+.modal__actions .card__like-button {
+  inline-size: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding-block: 10px;
+  /* переопределяем вертикальные отступы для кнопки ОК */
+}
+
+/* Типографика текста кнопки ОК в модальном окне */
+.modal .button__text {
+  font-family: var(--font-accent);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 0.9;
+  /* 90% */
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  /* затемнение фона */
+}
+
+/* Адаптивность: контрольная точка 375px */
+@media (max-width: 375px) {
+
+  /* Растягиваем контейнер на всю ширину, убираем боковые поля */
+  .container {
+    inline-size: 100%;
+    margin-inline: 0;
+  }
+
+  /* Фиксированные размеры шапки на мобилке */
+  .page-header__logo {
+    font-size: 49px;
+  }
+
+  .page-header__subtitle {
+    font-size: 14px;
+  }
+
+  /* Размер шапки на минимальной мобильной: 375×327, и отступ снизу 100px */
+  .page-header {
+    margin-block-start: 100px;
+    /* фиксируем верхний отступ 100px на мобилке */
+    min-block-size: 327px;
+    margin-block-end: 100px;
+  }
+
+  /* Кнопка в футере: иконка сверху, текст ниже */
+  .page-footer__save-button {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Размер иконки футер-кнопки на мобилке: 28×28 */
+  .page-footer__save-button .save-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Фиксируем отступ над футером на 50px в мобилке */
+  .page-footer {
+    margin-block-start: 50px;
+  }
+
+  /* Заголовок карточки: Bold (700) на мобилке вместо 715 */
+  .page-cards__item-heading {
+    font-variation-settings: 'wght' 700;
+    line-height: 1.15;
+    /* немного увеличиваем межстрочный интервал для 2 строк */
+  }
+
+  .page-cards__item-header {
+    padding: 5px 10px;
+  }
+
+  /* Описание карточки: увеличенный межбуквенный интервал на мобилке */
+  .page-cards__item-description {
+    letter-spacing: 0.05em;
+  }
 }

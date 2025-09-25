@@ -1,1 +1,90 @@
 /* В этом файле будут храниться все значения переменных в исходном состоянии, а так же их изменения в зависимости от ширины устройства */
+
+:root {
+    /* Настраиваемые переменные для градиента-сетки */
+    --grid-color: #d3d3d3;
+    /* Цвет линий сетки */
+    --grid-step: 2px;
+    /* Толщина цветной и прозрачной полосы */
+    --bg-top: #e7e7e7;
+    /* Верхний цвет плавного фона */
+    --bg-bottom: #1a1a1a;
+    /* Нижний цвет плавного фона */
+    --bg-start-offset: 0.01%;
+    /* Точка старта изменения цвета */
+
+    /* Скомбинированный многоcлойный фон страницы */
+    --page-gradient:
+        /* Полосы слева направо */
+        repeating-linear-gradient(to right,
+            var(--grid-color) 0 var(--grid-step),
+            transparent var(--grid-step) calc(var(--grid-step) * 2)),
+        /* Полосы сверху вниз */
+        repeating-linear-gradient(to bottom,
+            var(--grid-color) 0 var(--grid-step),
+            transparent var(--grid-step) calc(var(--grid-step) * 2)),
+        /* Плавное изменение насыщенности сверху вниз */
+        linear-gradient(to bottom,
+            var(--bg-top) var(--bg-start-offset),
+            var(--bg-bottom) 100%);
+
+    /* Адаптивная ширина контейнера (переиспользуемая по проекту)
+    При ширине экрана 1440px контейнер = 700px.
+    На более узких — сжимается, но не меньше 320px. На более широких — не больше 700px.
+  */
+    --container-inline-size: clamp(320px, calc(100vw * 700 / 1440), 700px);
+
+    /* Внешние отступы шапки: при 1440×960 получим 100 370 492 370 */
+    --header-mt: clamp(16px, calc(100vw * 100 / 1440), 100px);
+    /* Нижний внешний отступ шапки: 98px при ширине 1440px, может уменьшаться на более узких экранах */
+    --header-mb: clamp(16px, calc(100vw * 98 / 1440), 98px);
+
+    /* Внутренний отступ шапки (небольшой, чтобы текст не прилипал к краям) */
+    --header-pad: clamp(12px, 2vw, 24px);
+
+    /* Типографика шапки */
+    --header-logo-size: 65px;
+    /* фиксированный размер для десктопа */
+    --header-subtitle-size: 23px;
+    /* фиксированный размер для десктопа */
+    --header-subtitle-weight: 400;
+    --header-subtitle-letter: 0;
+    /* Расстояние между заголовком и подзаголовком строго 20px */
+    --header-gap: 20px;
+
+    /* Минимальная высота шапки: при высоте экрана 960px = 368px */
+    --header-min-block-size: clamp(200px, calc(100vh * 368 / 960), 368px);
+
+    /* Переменные шрифтов и начальные веса */
+    --font-main: 'Inter', Arial, sans-serif;
+    --font-accent: 'PressStart2P', monospace;
+    --card-title-weight: 715;
+    /* Вес заголовка карточки */
+
+    /* Переменные карточек */
+    /* Расстояние между карточками: 50px при ширине 1440px */
+    --cards-gap: clamp(16px, calc(100vw * 50 / 1440), 50px);
+
+
+    /* Лейбл на изображении */
+    --label-stroke-color: #ffffff;
+    /* Цвет обводки текста лейбла */
+    --label-opacity: 0.6;
+    /* Прозрачность лейбла */
+
+    /* Типографика заголовка карточки */
+    --card-title-size: 18px;
+    --card-title-line-height: 1;
+    --card-title-letter: 0.01em;
+
+    /* Типографика описания карточки */
+    --card-desc-size: 18px;
+    --card-desc-line-height: 21px;
+    --card-desc-weight: 410;
+
+    /* Цвета анимаций лайка */
+    --contour-color: #000000;
+    /* цвет контура сердца */
+    --animation-fill-color: #ff0000;
+    /* базовый цвет заливки (искры/лайк) */
+}

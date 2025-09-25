@@ -4,8 +4,117 @@
 ✦ like-icon — для svg-иконки анимированного сердца
 ✦ card__like-button — для кнопки Like рядом с иконкой
 ✦ card__icon-button — для кнопки, оборачивающей иконку
-✦ card__icon-button — для кнопки, оборачивающей иконку
 ✦ is-liked — для обозначения состояния лайкнутой иконки в виде сердца
 ✦ button__text — для обозначения текстового элемента внутри кнопки
 
 */
+
+/* Базовые состояния и переходы для частей сердца */
+.like-icon .contour {
+  fill: var(--contour-color);
+  transition: fill 0.1s linear;
+}
+
+.like-icon .main-body {
+  fill: transparent;
+  transition: fill 0.3s linear;
+  /* без задержки */
+}
+
+.like-icon .core {
+  fill: transparent;
+  transition: fill 0.3s linear 0.03s;
+  /* с небольшой задержкой */
+}
+
+.like-icon .sparks {
+  fill: var(--animation-fill-color);
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+
+/* Состояние :hover — проявление сердцевины и затем основного тела */
+.card__icon-button:hover .like-icon .core {
+  fill: var(--contour-color);
+  /* Отменяем базовую задержку 0.03s для core на hover */
+  transition: fill 0.3s linear 0s;
+}
+
+.card__icon-button:hover .like-icon .main-body {
+  fill: var(--contour-color);
+  /* Добавляем задержку 0.05s, чтобы тело появлялось вслед за core */
+  transition: fill 0.3s linear 0.05s;
+}
+
+/* Состояние :active — при зажатии: те же задержки, цвет — акцентный */
+.card__icon-button:active .like-icon .core {
+  fill: var(--contour-color);
+  transition: fill 0.3s linear 0s;
+}
+
+.card__icon-button:active .like-icon .main-body {
+  fill: var(--contour-color);
+  transition: fill 0.3s linear 0.05s;
+}
+
+/* Клик (toggle класса .is-liked на svg.like-icon) */
+/* Порядок: сердцевина -> тело -> контур; также лёгкий бамп и искры */
+.like-icon.is-liked .core {
+  fill: var(--animation-fill-color);
+  transition: fill 0.3s linear 0s;
+}
+
+.like-icon.is-liked .main-body {
+  fill: var(--animation-fill-color);
+  transition: fill 0.3s linear 0.05s;
+}
+
+.like-icon.is-liked .contour {
+  fill: var(--animation-fill-color);
+  /* Контур проявляется последним: 0.3s linear 0.06s */
+  transition: fill 0.3s linear 0.06s;
+}
+
+/* Анимации масштаба сердца и вспышки искр при клике */
+.like-icon {
+  /* чтобы transform масштабирования работал предсказуемо */
+  transform-origin: center;
+}
+
+.like-icon .heart {
+  transform-origin: center;
+}
+
+.like-icon.is-liked .heart {
+  /* Масштабирование с 1 до 1.25, запуск через 0.1s, длительность 0.3s, ease-in, однократно */
+  animation: heart-bump 0.3s ease-in 0.1s 1 normal none;
+}
+
+.like-icon.is-liked .sparks {
+  /* Вспышка искр: 0.3s ease-in, запуск через 0.3s */
+  animation: sparks-pop 0.3s ease-in 0.3s 1 normal none;
+}
+
+@keyframes heart-bump {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.25);
+  }
+}
+
+@keyframes sparks-pop {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
