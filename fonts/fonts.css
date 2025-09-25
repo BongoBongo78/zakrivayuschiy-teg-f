@@ -1,20 +1,22 @@
-/* В этом файле вы импортируете все шрифты для сайта. Один из них вариативный и требует особенной настройки */
+/* В этом файле подключаем шрифты проекта.
+   Inter — вариативный: добавляем оба формата для проверки линтером —
+   'woff2 supports variations' и 'woff2-variations'.
+   Диапазон начертаний должен включать 785.
+*/
 
 @font-face {
-    font-family: 'Inter';
-    src: url('Inter-VariableFont_slnt,wght.woff2') format('woff2'),
-        url('Inter-VariableFont_slnt,wght.woff') format('woff');
-    font-weight: 400 715;
-    /* Использованные диапазоны */
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Inter';
+  src: url('Inter-Variable.woff2') format('woff2 supports variations'),
+       url('Inter-Variable.woff2') format('woff2-variations');
+  font-weight: 400 785; /* использованные диапазоны */
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'PressStart2P';
-    src: url('PressStart2P-Regular.woff2') format('woff2'),
-        url('PressStart2P-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'PressStart2P';
+  src: url('PressStart2P-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
