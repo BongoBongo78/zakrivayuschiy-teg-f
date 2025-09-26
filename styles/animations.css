@@ -30,7 +30,6 @@
 .like-icon .sparks {
   fill: var(--animation-fill-color);
   opacity: 0;
-  transition: opacity 0.3s linear;
 }
 
 /* Состояние :hover — проявление сердцевины и затем основного тела */
@@ -58,26 +57,21 @@
 }
 
 /* Клик (toggle класса .is-liked на svg.like-icon) */
-/* Порядок: сердцевина -> тело -> контур; также лёгкий бамп и искры */
+/* 5 шагов: 1) покой 2) заполняется сердцевина 3) заполняется тело 4) вспышка искр 5) итог — красное сердце */
 .like-icon.is-liked .core {
-  fill: var(--animation-fill-color);
-  transition: fill 0.3s linear 0s;
+  animation: core-fill 0.8s linear forwards;
 }
 
 .like-icon.is-liked .main-body {
-  fill: var(--animation-fill-color);
-  transition: fill 0.3s linear 0.05s;
+  animation: main-fill 0.8s linear forwards;
 }
 
 .like-icon.is-liked .contour {
-  fill: var(--animation-fill-color);
-  /* Контур проявляется последним: 0.3s linear 0.06s */
-  transition: fill 0.3s linear 0.06s;
+  animation: contour-fill 0.8s linear forwards;
 }
 
 /* Анимации масштаба сердца и вспышки искр при клике */
 .like-icon {
-  /* чтобы transform масштабирования работал предсказуемо */
   transform-origin: center;
 }
 
@@ -86,35 +80,43 @@
 }
 
 .like-icon.is-liked .heart {
-  /* Масштабирование с 1 до 1.25, запуск через 0.1s, длительность 0.3s, ease-in, однократно */
-  animation: heart-bump 0.3s ease-in 0.1s 1 normal none;
+  /* Лёгкий бамп параллельно заполнению */
+  animation: heart-bump 0.3s ease-in 0.2s 1 normal none;
 }
 
 .like-icon.is-liked .sparks {
-  /* Вспышка искр: 0.3s ease-in, запуск через 0.3s */
-  animation: sparks-pop 0.3s ease-in 0.3s 1 normal none;
+  /* Вспышка искр на 4 шаге последовательности */
+  animation: sparks-sequence 0.8s linear forwards;
 }
 
 @keyframes heart-bump {
   0% {
     transform: scale(1);
   }
-
   100% {
     transform: scale(1.25);
   }
 }
 
-@keyframes sparks-pop {
-  0% {
-    opacity: 0;
-  }
+/* 5-шаговые последовательности заполнения */
+@keyframes core-fill {
+  0%, 19% { fill: transparent; }
+  20%, 100% { fill: var(--animation-fill-color); }
+}
 
-  50% {
-    opacity: 1;
-  }
+@keyframes main-fill {
+  0%, 39% { fill: transparent; }
+  40%, 100% { fill: var(--animation-fill-color); }
+}
 
-  100% {
-    opacity: 0;
-  }
+@keyframes contour-fill {
+  0%, 59% { fill: var(--contour-color); }
+  60%, 100% { fill: var(--animation-fill-color); }
+}
+
+/* Искры: появляются на 80–90%, исчезают к финалу */
+@keyframes sparks-sequence {
+  0%, 79% { opacity: 0; }
+  80%, 90% { opacity: 1; }
+  100% { opacity: 0; }
 }

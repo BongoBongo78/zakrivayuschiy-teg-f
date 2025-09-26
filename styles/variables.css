@@ -28,19 +28,18 @@
             var(--bg-top) var(--bg-start-offset),
             var(--bg-bottom) 100%);
 
-    /* Адаптивная ширина контейнера (переиспользуемая по проекту)
-    При ширине экрана 1440px контейнер = 700px.
-    На более узких — сжимается, но не меньше 320px. На более широких — не больше 700px.
-  */
-    --container-inline-size: clamp(320px, calc(100vw * 700 / 1440), 700px);
-
+    /* Адаптивная ширина контейнера (резиновая): */
+    --container-inline-size: min(100%, 700px);
     /* Внешние отступы шапки: при 1440×960 получим 100 370 492 370 */
     --header-mt: clamp(16px, calc(100vw * 100 / 1440), 100px);
-    /* Нижний внешний отступ шапки: 98px при ширине 1440px, может уменьшаться на более узких экранах */
-    --header-mb: clamp(16px, calc(100vw * 98 / 1440), 98px);
+    /* Нижний внешний отступ шапки: 93px при ширине 1440px (уменьшено на 5px), может уменьшаться на более узких экранах */
+    --header-mb: clamp(16px, calc(100vw * 93 / 1440), 93px);
 
-    /* Внутренний отступ шапки (небольшой, чтобы текст не прилипал к краям) */
+    /* Внутренние отступы шапки */
+    /* Горизонтальные паддинги контейнера шапки */
     --header-pad: clamp(12px, 2vw, 24px);
+    /* Вертикальные паддинги шапки: 130px на десктопе, 122px на 375px */
+    --header-pad-block: clamp(122px, calc(100vw * 130 / 1440), 130px);
 
     /* Типографика шапки */
     --header-logo-size: 65px;
@@ -48,38 +47,30 @@
     --header-subtitle-size: 23px;
     /* фиксированный размер для десктопа */
     --header-subtitle-weight: 400;
-    --header-subtitle-letter: 0;
     /* Расстояние между заголовком и подзаголовком строго 20px */
     --header-gap: 20px;
 
-    /* Минимальная высота шапки: при высоте экрана 960px = 368px */
-    --header-min-block-size: clamp(200px, calc(100vh * 368 / 960), 368px);
-
     /* Переменные шрифтов и начальные веса */
     --font-main: 'Inter', Arial, sans-serif;
-    --font-accent: 'PressStart2P', monospace;
+    --font-accent: 'PressStart2P', fantasy;
     --card-title-weight: 715;
     /* Вес заголовка карточки */
 
     /* Переменные карточек */
-    /* Расстояние между карточками: 50px при ширине 1440px */
-    --cards-gap: clamp(16px, calc(100vw * 50 / 1440), 50px);
-
-
     /* Лейбл на изображении */
     --label-stroke-color: #ffffff;
     /* Цвет обводки текста лейбла */
-    --label-opacity: 0.6;
+    --label-opacity: 0.5;
     /* Прозрачность лейбла */
 
     /* Типографика заголовка карточки */
     --card-title-size: 18px;
     --card-title-line-height: 1;
-    --card-title-letter: 0.01em;
+    --card-title-letter: 0;
 
     /* Типографика описания карточки */
     --card-desc-size: 18px;
-    --card-desc-line-height: 21px;
+    --card-desc-line-height: 1.2;
     --card-desc-weight: 410;
 
     /* Цвета анимаций лайка */
