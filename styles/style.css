@@ -178,10 +178,8 @@
   letter-spacing: 0;
   text-transform: uppercase;
   color: #000;
-}
 
-/* Фоллбэк-обводка через тень (поддерживается везде) */
-.page-cards__item-label {
+  /* Фоллбэк-обводка через тень (поддерживается везде) */
   text-shadow:
     1px 0 0 var(--label-stroke-color),
     -1px 0 0 var(--label-stroke-color),
@@ -235,6 +233,11 @@
   background: #fff;
   color: #000;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+  z-index: 0;
 }
 
 /* Фиксируем ширину кнопки Like, чтобы текст Like/Unlike не менял размер кнопки */
@@ -283,11 +286,11 @@
   font-size: 14px;
   line-height: 0.9;
   letter-spacing: 0;
-}
-
-/* Текст кнопок для анимаций и скриптов */
-.button__text {
   display: inline-block;
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  mix-blend-mode: difference;
 }
 
 /* Блок действий страницы */
@@ -329,15 +332,6 @@
   text-transform: none;
 }
 
-/* Эффекты для всех текстовых кнопок */
-.btn {
-  position: relative;
-  overflow: hidden;
-  outline: none;
-  transition: box-shadow 0.3s ease;
-  z-index: 0;
-}
-
 /* Тень при фокусе (2px 2px 0, цвет = currentColor) */
 .btn:focus-visible {
   box-shadow: 2px 2px 0 currentColor;
@@ -358,14 +352,6 @@
   transform: translateX(0);
 }
 
-/* Текст и иконка поверх, с режимом смешивания difference */
-.btn .button__text {
-  position: relative;
-  z-index: 1;
-  color: #fff;
-  mix-blend-mode: difference;
-}
-
 /* Поддерживаем читаемость иконки на тёмном оверлее без фильтров */
 .btn:hover .save-icon,
 .btn:focus-visible .save-icon {
@@ -382,7 +368,6 @@
   stroke: none;
 }
 
-
 /* Размер иконки в модальном окне по макету: 39×39px */
 .modal .save-icon {
   width: 39px;
@@ -398,21 +383,20 @@
   background: transparent;
 }
 
+/* Модальное окно */
 .modal[open] {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: clamp(12px, 3vw, 20px);
+  column-gap: 20px;
+  row-gap: 30px;
   background: #fff;
   color: #000;
   border: 2px solid #000;
-  /* Динамические паддинги: 40px на 375px, ~30px на десктопе */
-  padding: clamp(30px, calc(40px + (100vw - 375px) * -0.00939), 40px);
-  /* Размер модалки: увеличим минимальную ширину, чтобы текст не уходил в 4-ю строку */
-  inline-size: clamp(320px, 40vw, 353px);
-  max-inline-size: 95vw;
+  padding-block: 30px;
+  padding-inline: 30px;
   box-sizing: border-box;
-  /* Масштабируем внутренний текст относительно ширины модалки */
-  container-type: inline-size;
+  margin-inline: auto;
+  max-inline-size: 100%; /* Не выходим за пределы экрана */
 }
 
 .modal__content {
@@ -420,9 +404,8 @@
 }
 
 .modal__text {
-  display: flex;
-  align-items: center;
-  max-inline-size: 18ch;
+  max-inline-size: 18ch; /* Ограничиваем кол-во символов */
+  min-inline-size: 230px;
 }
 
 /* Типографика описания модального окна */
@@ -430,9 +413,8 @@
   margin: 0;
   font-family: var(--font-accent);
   font-weight: 400;
-  font-size: clamp(12px, 2.6cqw, 14px);
+  font-size: 14px;
   line-height: 1.5;
-  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
